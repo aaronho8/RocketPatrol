@@ -8,7 +8,6 @@ class Play extends Phaser.Scene {
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
-
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -22,7 +21,6 @@ class Play extends Phaser.Scene {
         this.add.rectangle(5, 443, 630, 32, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(5, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(603, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
-
         // green UI background
         this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0, 0);
 
@@ -46,9 +44,8 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
-        // score
+        // player 1 score
         this.p1Score = 0;
-
         // score display
         let scoreConfig = {
             fontFamily: 'Courier',
@@ -77,24 +74,21 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        // check key input for restart
+        // check key input for restart / menu
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
-            this.scene.restart(this.p1Score);
+            this.scene.restart();
         }
-        
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
         }
 
-        this.starfield.tilePositionX -= 4;
-
+        this.starfield.tilePositionX -= 4;  // scroll tile sprite
         if (!this.gameOver) {               
             this.p1Rocket.update();         // update rocket sprite
             this.ship01.update();           // update spaceships (x3)
             this.ship02.update();
             this.ship03.update();
-        } 
-                    
+        }             
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
@@ -133,9 +127,9 @@ class Play extends Phaser.Scene {
             boom.destroy();                     // remove explosion sprite
         });
         // score increment and repaint
-        this.p1score += ship.points;
-        this.scoreLeft.text = this.p1score;
-
-        this.sound.play('sfx_explosion');
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;     
+        // play sound
+        this.sound.play('sfx_explosion');  
     }
 }
