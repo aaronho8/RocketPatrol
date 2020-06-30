@@ -6,6 +6,7 @@ let config = {
     scene: [ Menu, Play ]
 }
 
+// main game object
 let game = new Phaser.Game(config);
 
 // define game settings
