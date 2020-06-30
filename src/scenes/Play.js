@@ -44,7 +44,7 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
-        // player 1 score
+        // score
         this.p1Score = 0;
         // score display
         let scoreConfig = {
